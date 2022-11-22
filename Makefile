@@ -20,7 +20,7 @@ ${NAME} : $(OBJS)
 	ar rcs libft.a $(OBJS)
 
 bonus : $(OBJS) $(OBJS_B)
-	ar rcs libft.a $(NAME) $(OBJS_B)
+	ar rcs libft.a $(NAME) $(OBJS) $(OBJS_B)
 
 compilation :
 	${GCC} -I libft.h -c $< -o ${<:.c=.o}
