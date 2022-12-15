@@ -1,38 +1,32 @@
-SRCS = ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
-	   ft_memcpy.c ft_memmove.c ft_memset.c ft_strlcat.c ft_strlcpy.c ft_strlen.c \
-	   ft_toupper.c ft_tolower.c ft_memchr.c ft_memcmp.c ft_strchr.c ft_strncmp.c \
-	   ft_strrchr.c ft_strnstr.c ft_atoi.c ft_calloc.c ft_strdup.c ft_strjoin.c \
-	   ft_substr.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_putchar_fd.c \
-	   ft_striteri.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c
+SRCS = ft_bzero.c ft_isalnum.c ft_memset.c ft_memcpy.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_strlen.c ft_memmove.c ft_strlcpy.c ft_strlcat.c ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c ft_strncmp.c ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c
 
-OBJS = $(SRCS:.c=.o)
+BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
-SRCS_B = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
-		ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
+OBJ = ${BONUS:.c=.o}
 
-OBJS_B = $(SRCS_B:.c=.o)
+OBJS = ${SRCS:.c=.o}
+
+GCC = gcc -Wall -Wextra -Werror
 
 NAME = libft.a
 
-GCC = gcc -Wall -Werror -Wextra
+.c.o :
+		${GCC} -I libft.h -c $< -o ${<:.c=.o}
 
-${NAME} : $(OBJS)
-	ar rcs libft.a $(OBJS)
+$(NAME) : ${OBJS}
+		ar rcs ${NAME} ${OBJS}
 
-bonus : $(OBJS) $(OBJS_B)
-	ar rcs libft.a $(NAME) $(OBJS) $(OBJS_B)
+all : $(NAME)
 
-compilation :
-	${GCC} -I libft.h -c $< -o ${<:.c=.o}
+bonus : ${OBJS} ${OBJ}
+	ar rcs ${NAME} ${OBJS} ${OBJ}
 
-all : ${NAME}
+clean:
+		rm -f *.o
 
-clean :
-	rm -f $(OBJS) $(OBJS_B)
+fclean: clean
+		rm -f $(NAME)
 
-fclean : clean
-	rm -f libft.a
+re: fclean all
 
-re : fclean all
-
-.PHONY: all re clean fclean bonus compilation
+.PHONY : .c.o all bonus clean fclean re
